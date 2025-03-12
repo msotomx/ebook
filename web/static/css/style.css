@@ -991,6 +991,7 @@ body i.icon {
 	background-color: #ffffff;
 	box-shadow: 0 3px 10px 0 rgba(0,0,0,0.03);
 	position: relative;
+	
 }
 body .header-sticky .site-header.header_sticky {
 	position: fixed;
@@ -1881,7 +1882,7 @@ body .widget_search .dgwt-wcas-si img {
 		padding: 0 15px 0 0;
 	}
 	.site-header .h-logo img {
-		max-height: 50px;
+		max-height: 10px; /* 50px; */
 	}
 	.site-header .h-shop {
 		text-align: right;
@@ -11757,3 +11758,6 @@ Compare List
 
 
 
+.h-logo {
+	height: 3rem;
+}

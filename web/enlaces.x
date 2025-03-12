@@ -4,3 +4,5 @@
 4: en catalogo.html {% url 'web:producto' producto.id %}
 5: en categorias.html {% url 'web:productosPorCategoria' categoria.id %}
 6: en producto.html {% url 'web:agregarCarrito' producto.id %}
+7: en carrito.html {% url 'web:limpiarCarrito' %}
+8: en carrito.html {% url 'web:registrarPedido' %}

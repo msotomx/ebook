@@ -19,9 +19,8 @@
                             <a href="#">{{value.categoria}}</a>
                         </p>
                         <h3><a href="producto.html">{{ value.nombre }}</a></h3>
-                    </div><!--
-    No Space
-    --><div class="prod-li-prices">
+                    </div><!--     No Space -->
+                <div class="prod-li-prices">
                     <div class="prod-li-price-wrap">
                         <p>Precio</p>
                         <p class="prod-li-price">${{ value.precio }}</p>
@@ -37,9 +36,7 @@
                         <p>Total</p>
                         <p class="prod-li-total">${{value.subtotal}}</p>
                     </div>
-                </div><!--
-No Space
---></div>
+                </div><!-- No Space -->         </div>
                 <div class="prod-li-info">
                     <div class="prod-li-rating-wrap">
                         <p data-rating="5" class="prod-li-rating">
@@ -79,8 +76,8 @@ No Space
             <input type="submit" class="button" value="Apply">
         </div>
         <div class="cart-collaterals">
-            <a href="{% url 'web:limpiarCarrito' %}" class="checkout-button button">Limpiar Carrito</a> <!-- {% url 'web:limpiarCarrito' %} -->
-            <a href="{% url 'web:registrarPedido' %}" class="checkout-button button">Realizar Pedido</a> <!-- {% url 'web:registrarPedido' %} -->
+            <a href="{% url 'web:limpiarCarrito' %}" class="checkout-button button">Limpiar Carrito</a> <!-- 7 -->
+            <a href="{% url 'web:registrarPedido' %}" class="checkout-button button">Realizar Pedido</a> <!-- 8 -->
             <div class="order-total">
                 <p class="cart-totals-ttl">Total</p>
                 <p class="cart-totals-val">${{request.session.cartMontoTotal}}</p>

@@ -1,11 +1,11 @@
-from django.urls import path
 
+from django.urls import path
 from . import views
 
 app_name = 'web'
 
 urlpatterns = [
-    path('', views.index,name='index'),
+    path('', views.index, name='index'),
     path('productosPorCategoria/<int:categoria_id>',views.productosPorCategoria,name='productosPorCategoria'),
     path('productosPorNombre',views.productosPorNombre,name='productosPorNombre'),
     path('producto/<int:producto_id>',views.productoDetalle,name='producto'),
@@ -25,4 +25,5 @@ urlpatterns = [
     path('pruebaPaypal',views.view_that_asks_for_money,name='pruebaPaypal'),
     path('confirmarPedido',views.confirmarPedido,name='confirmarPedido'),
     path('gracias',views.gracias,name='gracias')
-]
+] 
+

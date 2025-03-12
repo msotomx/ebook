@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1 class="maincont-ttl">PEDIDO NRO : {{pedido.numero_pedido}}</h1>
+<h1 class="maincont-ttl">PEDIDO NUM : {{pedido.numero_pedido}}</h1>
     <ul class="b-crumbs">
         <li><a href="/">Home</a></li>
         <li>Pedido</li>
@@ -19,7 +19,7 @@
                             <p>
                                 <a href="#">{{detalle.producto.categoria}}</a>
                             </p>
-                            <h3><a href="product.html">{{detalle.producto.nombre}}</a></h3>
+                            <h3><a href="producto.html">{{detalle.producto.nombre}}</a></h3>
                         </div>
                         <div class="prod-li-prices">
                             <div class="prod-li-price-wrap">

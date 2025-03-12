@@ -1,25 +1,24 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-from .models import Categoria, Proveedor, Producto, Cliente, Pedido, PedidoDetalle
+from .models import Categoria, Producto, Cliente, Pedido, PedidoDetalle
 
 from django.conf import settings
 
 # Create your views here.
 """ VISTAS PARA EL CATALOGO DE PRODUCTOS """
-
 def index(request):
     listaProductos = Producto.objects.all()
     listaCategorias = Categoria.objects.all()
 
     context = {
-        'productos':listaProductos,
-        'categorias':listaCategorias
+        'productos' : listaProductos,
+        'categorias' : listaCategorias
     }
-    return render(request,'index.html',context)
+    return render(request,'index.html', context)
 
 def productosPorCategoria(request,categoria_id):
-    """ Vista para filtrar productos por categoria """
+    """ vista para filtrar productos por categoria """
     objCategoria = Categoria.objects.get(pk=categoria_id)
     listaProductos = objCategoria.producto_set.all()
 
@@ -33,26 +32,26 @@ def productosPorCategoria(request,categoria_id):
     return render(request,'index.html',context)
 
 def productosPorNombre(request):
-    """ Vista para filtrado de productos por nombre """
+    """ busqueda de productos por nombre """
     nombre = request.POST['nombre']
 
     listaProductos = Producto.objects.filter(nombre__contains=nombre)
     listaCategorias = Categoria.objects.all()
 
     context = {
-        'categorias':listaCategorias,
-        'productos':listaProductos
+        'productos':listaProductos,
+        'categorias':listaCategorias
     }
-
     return render(request,'index.html',context)
 
 def productoDetalle(request,producto_id):
-    """ Vista para el detalle de producto """
-    
-    #objProducto = Producto.objects.get(pk=producto_id)
+    """ vista para el detalle del producto """
+
+    # objProducto = Producto.objects.get(pk=producto_id)
     objProducto = get_object_or_404(Producto,pk=producto_id)
+    
     context = {
-        'producto':objProducto
+        'producto': objProducto
     }
 
     return render(request,'producto.html',context)
@@ -76,9 +75,6 @@ def agregarCarrito(request,producto_id):
 
     #print(request.session.get("cart"))
 
-    if request.method == 'GET':
-        return redirect('/')
-
     return render(request,'carrito.html')
 
 def limpiarCarrito(request):
@@ -93,6 +89,7 @@ def eliminarProductoCarrito(request,producto_id):
     carritoProducto.delete(objProducto)
 
     return render(request,'carrito.html')
+
 
 """ VISTAS PARA CLIENTES Y USUARIOS """
 
@@ -127,18 +124,11 @@ def cuentaUsuario(request):
             'nombre':request.user.first_name,
             'apellidos':request.user.last_name,
             'email':request.user.email,
+            'direccion':clienteEditar.direccion,
+            'telefono':clienteEditar.telefono,
             'rfc':clienteEditar.rfc,
             'sexo':clienteEditar.sexo,
-            'telefono':clienteEditar.telefono,
-            'fecha_nacimiento':clienteEditar.fecha_nacimiento,
-            'direccion':clienteEditar.direccion,
-            'codigo_postal':clienteEditar.codigo_postal,
-            'ciudad':clienteEditar.ciudad,
-            'direccion_entrega':clienteEditar.direccion_entrega,
-            'codigo_postal_entrega':clienteEditar.codigo_postal_entrega,
-            'ciudad_entrega':clienteEditar.ciudad_entrega,
-            'campo_libre':clienteEditar.campo_libre,
-            'comentarios':clienteEditar.comentarios
+            'fecha_nacimiento':clienteEditar.fecha_nacimiento
         }
     except:
         dataCliente = {
@@ -176,13 +166,6 @@ def actualizarCliente(request):
             nuevoCliente.telefono = dataCliente["telefono"]
             nuevoCliente.sexo = dataCliente["sexo"]
             nuevoCliente.fecha_nacimiento = dataCliente["fecha_nacimiento"]
-            nuevoCliente.codigo_postal = dataCliente["codigo_postal"]
-            nuevoCliente.ciudad = dataCliente["ciudad"]
-            nuevoCliente.direccion_entrega = dataCliente["direccion_entrega"]
-            nuevoCliente.codigo_postal_entrega = dataCliente["codigo_postal_entrega"]
-            nuevoCliente.ciudad_entrega = dataCliente["ciudad_entrega"]
-            nuevoCliente.campo_libre = dataCliente["campo_libre"]
-            nuevoCliente.comentarios = dataCliente["comentarios"]
             nuevoCliente.save()
 
             mensaje = "Datos Actualizados"
@@ -241,14 +224,7 @@ def registrarPedido(request):
             'telefono':clienteEditar.telefono,
             'rfc':clienteEditar.rfc,
             'sexo':clienteEditar.sexo,
-            'fecha_nacimiento':clienteEditar.fecha_nacimiento,
-            'codigo_postal' :clienteEditar.codigo_postal,
-            'ciudad':clienteEditar.ciudad,
-            'direccion_entrega':clienteEditar.direccion_entrega,
-            'codigo_postal_entrega':clienteEditar.codigo_postal_entrega,
-            'ciudad_entrega':clienteEditar.ciudad_entrega,
-            'campo_libre':clienteEditar.campo_libre,
-            'comentarios':clienteEditar.comentarios
+            'fecha_nacimiento':clienteEditar.fecha_nacimiento
         }
     except:
         dataCliente = {
@@ -340,7 +316,7 @@ def confirmarPedido(request):
 
         #Creamos boton de paypal
         paypal_dict = {
-            "business": 'sb-nc043e38051110@business.example.com' # settings.PAYPAL_BUSINESS_EMAIL,  # modificar el correo
+            "business": settings.PAYPAL_BUSINESS_EMAIL,  # modificar el correo
             "amount": montoTotal,
             "item_name": "eBook Hijos Felices"+numPedido,
             "invoice": numPedido,
@@ -357,7 +333,6 @@ def confirmarPedido(request):
             'formPaypal':formPaypal
         }
 
-        #limpiamos carrito de compras
         carrito = Cart(request)
         carrito.clear
 
@@ -378,10 +353,10 @@ def gracias(request):
         pedido.save()
 
         send_mail(
-            "Gracias por tu Compra",
+            "Gracias por su Compra",
             "Tu numero de pedido es " + pedido.numero_pedido,
             settings.ADMIN_USER_EMAIL,   # de donde se envia
-            [request.user.email, 'msotomx@gmail.com'],  # correos a los que se envia, separados por comas
+            [request.user.email, 'msotomx@gmail.com'],  # correos a los que se envia
             fail_silently=False,
         )
         context = {
